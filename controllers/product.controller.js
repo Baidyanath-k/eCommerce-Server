@@ -133,52 +133,6 @@ exports.deleteProductController = async (req, res, next) => {
   }
 };
 
-// UPDATE PRODUCT CONTROLLER || METHOD PUT CONTROLLER
-// exports.updateProductController = async (res, req, next) => {
-//   try {
-//     console.log(req.body)
-//     //express-formidable
-//     const { name, description, price, category, quantity, shipping } = req.body;
-
-//     const { photo } = req.files;
-
-//     switch (true) {
-//       case !name:
-//         return res.status(500).send({ error: "Name is Required" });
-//       case !description:
-//         return res.status(500).send({ error: "Description is Required" });
-//       case !price:
-//         return res.status(500).send({ error: "Price is Required" });
-//       case !category:
-//         return res.status(500).send({ error: "Category is Required" });
-//       case !quantity:
-//         return res.status(500).send({ error: "Quantity is Required" });
-//       case photo && photo.size > 1000000:
-//         return res
-//           .status(500)
-//           .send({ error: "photo is Required and should be less then 1mb" });
-//     }
-
-//     const products = await productModel.findByIdAndUpdate(
-//       req.params.id,
-//       { ...req.body, slug: slugify(name) },
-//       { new: true }
-//     );
-//     if (photo) {
-//       products.photo.data = fs.readFileSync(photo.path);
-//       products.photo.contentType = photo.type;
-//     }
-//     await products.save();
-//     res.status(200).send({
-//       success: true,
-//       message: "Product Updated Successfully",
-//       products,
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
 exports.updateProductController = async (req, res, next) => {
   try {
     const { name, description, price, category, quantity, shipping } = req.body;
@@ -192,11 +146,6 @@ exports.updateProductController = async (req, res, next) => {
         message: "This product id not found",
       });
     }
-
-    // if (photo) {
-    //   product.photo.data = fs.readFileSync(photo.path);
-    //   product.photo.contentType = photo.type;
-    // }
 
     const result = await product
       .set({
