@@ -44,4 +44,7 @@ router.delete(
   productController.deleteProductController
 );
 
+// FILTER BY PRODUCT || METHOD POST
+router.post("/filter-product", productController.filterByProduct);
+
 module.exports = router;
