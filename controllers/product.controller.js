@@ -184,3 +184,38 @@ exports.filterByProduct = async (req, res, next) => {
     next(error);
   }
 };
+
+// PRODUCT COUNT || METHOD GET
+exports.productCount = async (req, res, next) => {
+  try {
+    const total = await productModel.find({}).estimatedDocumentCount();
+    res.status(200).json({
+      success: true,
+      total,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// PRODUCT LIST BASE ON PAGE || METHOD GET
+exports.productListController = async (req, res, next) => {
+  try {
+    const perPage = 3;
+    const page = req.params.page ? req.params.page : 1;
+
+    const products = await productModel
+      .find({})
+      .select("-photo")
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

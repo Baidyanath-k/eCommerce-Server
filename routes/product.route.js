@@ -47,4 +47,10 @@ router.delete(
 // FILTER BY PRODUCT || METHOD POST
 router.post("/filter-product", productController.filterByProduct);
 
+// COUNT BY PRODUCT || METHOD GET
+router.get("/product-count", productController.productCount);
+
+// PRODUCT LIST BASE ON PAGE || METHOD GET
+router.get("/product-list/:page", productController.productListController);
+
 module.exports = router;
