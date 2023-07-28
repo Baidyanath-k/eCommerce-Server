@@ -53,4 +53,10 @@ router.get("/product-count", productController.productCount);
 // PRODUCT LIST BASE ON PAGE || METHOD GET
 router.get("/product-list/:page", productController.productListController);
 
+//SEARCH PRODUCT || METHOD GET
+router.get(
+  "/product-search/:keyword",
+  productController.searchProductController
+);
+
 module.exports = router;

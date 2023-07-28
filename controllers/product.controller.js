@@ -219,3 +219,21 @@ exports.productListController = async (req, res, next) => {
     next(error);
   }
 };
+
+//SEARCH PRODUCT || METHOD GET
+exports.searchProductController = async (req, res, next) => {
+  try {
+    const { keyword } = req.params;
+    const results = await productModel
+      .find({
+        $or: [
+          { name: { $regex: keyword, $options: "i" } },
+          { description: { $regex: keyword, $options: "i" } },
+        ],
+      })
+      .select("-photo");
+    res.json(results);
+  } catch (error) {
+    next(error);
+  }
+};
