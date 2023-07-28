@@ -59,4 +59,10 @@ router.get(
   productController.searchProductController
 );
 
+//similar PRODUCT || METHOD GET
+router.get(
+  "/similar-product/:pid/:cid",
+  productController.similarProductController
+);
+
 module.exports = router;

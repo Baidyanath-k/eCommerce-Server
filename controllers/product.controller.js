@@ -237,3 +237,20 @@ exports.searchProductController = async (req, res, next) => {
     next(error);
   }
 };
+
+//similar PRODUCT || METHOD GET
+exports.similarProductController = async (req, res, next) => {
+  try {
+    const { pid, cid } = req.params;
+    const products = await productModel
+      .find({ category: cid, _id: { $ne: pid } })
+      .select("-photo")
+      .limit(6);
+    res.status(200).json({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
