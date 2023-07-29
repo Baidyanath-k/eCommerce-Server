@@ -30,6 +30,9 @@ router.get("/get-products", productController.gatProductController);
 // GET SINGLE PRODUCT BY ID || METHOD GET
 router.get("/get-product/:id", productController.getSingleProductById);
 
+// GET SINGLE PRODUCT BY SLUG || METHOD GET
+router.get("/get-product/:slug", productController.getSingleProductBySlug);
+
 // GET SINGLE PRODUCT PHOTO BY ID || METHOD GET
 router.get(
   "/get-product-photo/:id",
@@ -64,5 +67,8 @@ router.get(
   "/similar-product/:pid/:cid",
   productController.similarProductController
 );
+
+// GET PRODUCT BY CATEGORY CONTROLLER || METHOD GET CONTROLLER
+router.get("/product-category/:slug",productController.productCategoryController)
 
 module.exports = router;

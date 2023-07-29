@@ -2,6 +2,7 @@ const slugify = require("slugify");
 const productModel = require("../models/Product.model");
 const formidable = require("express-formidable");
 const fs = require("fs");
+const Category = require("../models/Category.model");
 
 // CREATE PRODUCT CONTROLLER || METHOD POST CONTROLLER
 exports.createProduct = async (req, res, next) => {
@@ -90,6 +91,26 @@ exports.getSingleProductById = async (req, res, next) => {
       success: true,
       message: "Product save successfully",
       data: singleProduct,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// GET SINGLE PRODUCT CONTROLLER || METHOD GET CONTROLLER
+exports.getSingleProductBySlug = async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+
+    const singleProductSlug = await productModel
+      .findById({ slug })
+      .select("-photo")
+      .populate("category");
+
+    res.status(200).json({
+      success: true,
+      message: "Product save successfully",
+      data: singleProductSlug,
     });
   } catch (error) {
     next(error);
@@ -248,6 +269,22 @@ exports.similarProductController = async (req, res, next) => {
       .limit(6);
     res.status(200).json({
       success: true,
+      products,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// GET PRODUCT BY CATEGORY CONTROLLER || METHOD GET CONTROLLER
+exports.productCategoryController = async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+    const category = await Category.findOne({ slug });
+    const products = await productModel.find({ category }).populate("category");
+    res.status(200).json({
+      success: true,
+      category,
       products,
     });
   } catch (error) {
