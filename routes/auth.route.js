@@ -42,4 +42,11 @@ router.get(
 //forgot password route || METHOD POST
 router.post("/forgot-password", authController.forgotPasswordController);
 
+// update user profile || METHOD PUT
+router.put(
+  "/update-profile",
+  tokenRequireSignIn,
+  authController.updateProfileController
+);
+
 module.exports = router;

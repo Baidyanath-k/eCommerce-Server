@@ -40,7 +40,7 @@ exports.createLogin = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Login successfully",
-      data: {
+      user: {
         name: user.name,
         email: user.email,
         phone: user.phone,

@@ -77,7 +77,7 @@ exports.createRegisterController = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "User register successful",
-      data: user,
+      user,
     });
   } catch (error) {
     next(error);
@@ -102,7 +102,7 @@ exports.testToken = (req, res, next) => {
 };
 
 // user private route dashboard controller
-exports.userDashBoardController =async (req, res) => {
+exports.userDashBoardController = async (req, res) => {
   try {
     res.status(200).send({
       ok: true,
@@ -113,11 +113,10 @@ exports.userDashBoardController =async (req, res) => {
       message: "You are not to user, Please login",
     });
   }
-  
 };
 
 // admin private route dashboard controller
-exports.adminDashBoardController =async (req, res) => {
+exports.adminDashBoardController = async (req, res) => {
   try {
     res.status(200).send({
       ok: true,
@@ -174,6 +173,40 @@ exports.forgotPasswordController = async (req, res, next) => {
       success: true,
       message: "Reset successful",
       data: response,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.updateProfileController = async (req, res, next) => {
+  try {
+    const { name, email, phone, address, password } = req.body;
+    const user = await User.findById(req.user._id);
+    if (password && password >= 6) {
+      return res.status(500).json({
+        success: false,
+        message: "Password is required and at least 6 characters",
+        error: error.message,
+      });
+    }
+
+    const hashedPassword = password ? await hashPassword(password) : undefined;
+
+    const updateUser = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        name: name || user.name,
+        password: hashedPassword || user.password,
+        phone: phone || user.phone,
+        address: address || user.address,
+      },
+      { new: true }
+    );
+    res.status(200).json({
+      success: true,
+      message: "User Profile update successful",
+      updateUser,
     });
   } catch (error) {
     next(error);
