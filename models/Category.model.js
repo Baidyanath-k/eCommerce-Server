@@ -4,8 +4,8 @@ const categorySchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Must be enter category name"],
-      unique: true,
+      // required: [true, "Must be enter category name"],
+      // unique: true,
     },
     slug: {
       type: String,

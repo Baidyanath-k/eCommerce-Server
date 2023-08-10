@@ -4,6 +4,7 @@ const cors = require("cors");
 const authRouter = require("./routes/auth.route");
 const categoryRouter = require("./routes/category.route");
 const productRouter = require("./routes/product.route");
+const paymentRouter = require("./routes/payment.route");
 
 // middleware
 app.use(cors());
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/product", productRouter);
+app.use("/api/v1/payment-service", paymentRouter);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
