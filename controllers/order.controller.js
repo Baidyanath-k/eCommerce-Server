@@ -15,3 +15,39 @@ exports.getOrderController = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getAllOrderController = async (req, res, next) => {
+  try {
+    const allOrder = await orderModel
+      .find({})
+      .populate("products", "-photo")
+      .populate("buyer", "name")
+      .sort({ createAt: "-1" });
+    res.status(200).json({
+      success: true,
+      message: "All order get successfully",
+      data: allOrder,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.orderStatusController = async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+    const { status } = req.body;
+    const orderStatus = await orderModel.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    );
+    res.status(200).json({
+      success: true,
+      message: "Order Status Update successfully",
+      data: orderStatus,
+    });
+  } catch (error) {
+    next(err);
+  }
+};
